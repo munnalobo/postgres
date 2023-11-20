@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.List;
@@ -19,11 +18,13 @@ import java.util.Set;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -34,11 +35,11 @@ public class Book {
   Long id;
   String isbn;
   String title;
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "book_ratings", joinColumns = @JoinColumn(name = "book_id"))
   @Column(name = "rating")
   List<Integer> ratings;
-  @ElementCollection(fetch = FetchType.LAZY)
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "book_references", joinColumns = @JoinColumn(name = "book_id"))
   @AttributeOverrides({
       @AttributeOverride(name = "name", column = @Column(name = "name_value")),
@@ -46,6 +47,4 @@ public class Book {
   })
   Set<Reference> references = new HashSet<>();
 
-  @ManyToMany(mappedBy = "books")
-  Set<Author> authors;
 }
