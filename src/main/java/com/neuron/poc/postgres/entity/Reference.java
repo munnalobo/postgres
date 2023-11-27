@@ -16,6 +16,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 
 public class Reference {
+
   String name;
   String type;
   String edition;

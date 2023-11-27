@@ -30,6 +30,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Book {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
